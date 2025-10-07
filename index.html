@@ -2,96 +2,104 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Trái tim hồng lung linh</title>
   <style>
-    body{
-      margin:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: radial-gradient(circle at center, #2b0036 0%, #0b0013 100%);
-      overflow:hidden;
+      overflow: hidden;
     }
 
-    .heart{
-      position:relative;
-      width:200px;
-      height:180px;
-      transform: scale(1) rotate(0deg);
+    .heart {
+      position: relative;
+      width: min(40vw, 200px);
+      height: min(36vw, 180px);
       animation: beat 1.2s infinite ease-in-out;
+      transform-origin: center;
     }
 
-    .heart:before,
-    .heart:after{
-      content:"";
-      position:absolute;
-      top:0;
-      width:200px;
-      height:300px;
-      border-radius:200px 200px 0 0;
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 150%;
+      border-radius: 50% 50% 0 0;
       background: radial-gradient(circle at 50% 45%, #ff66b2 0%, #ff1493 50%, #e60073 100%);
-      box-shadow:0 0 50px rgba(255,102,178,0.9), 0 0 100px rgba(255,20,147,0.6);
+      box-shadow: 0 0 25px rgba(255,102,178,0.9), 0 0 60px rgba(255,20,147,0.6);
       animation: glow 2s infinite ease-in-out;
-      background-blend-mode: normal;
     }
 
-    .heart:before{
-      left:200px;
-      transform:rotate(-45deg);
-      transform-origin:0 100%;
+    .heart::before {
+      left: 50%;
+      transform: translateX(-50%) rotate(-45deg);
+      transform-origin: 0 100%;
     }
 
-    .heart:after{
-      left:0;
-      transform:rotate(45deg);
-      transform-origin:100% 100%;
+    .heart::after {
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      transform-origin: 100% 100%;
     }
 
-    @keyframes beat{
-      0%,100%{transform:scale(1) rotate(0deg);}
-      25%{transform:scale(1.1) rotate(0deg);}
-      50%{transform:scale(0.95) rotate(0deg);}
-      75%{transform:scale(1.05) rotate(0deg);}
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(0.95); }
+      75% { transform: scale(1.05); }
     }
 
-    @keyframes glow{
-      0%,100%{filter: drop-shadow(0 0 25px #ff66b2) drop-shadow(0 0 50px #ff1493);}
-      50%{filter: drop-shadow(0 0 40px #ff80c0) drop-shadow(0 0 80px #ff1493);}
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 20px #ff66b2) drop-shadow(0 0 40px #ff1493); }
+      50% { filter: drop-shadow(0 0 40px #ff80c0) drop-shadow(0 0 80px #ff1493); }
     }
 
-    .spark{
-      position:absolute;
-      border-radius:50%;
-      background:rgba(255,255,255,0.8);
+    .spark {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
       animation: sparkle 2s linear infinite;
     }
 
-    @keyframes sparkle{
-      from{transform:translateY(0) scale(0.5); opacity:1;}
-      to{transform:translateY(-150px) scale(1); opacity:0;}
+    @keyframes sparkle {
+      from { transform: translateY(0) scale(0.5); opacity: 1; }
+      to { transform: translateY(-150px) scale(1); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .heart {
+        width: 45vw;
+        height: 40vw;
+      }
     }
   </style>
 </head>
 <body>
   <div class="heart"></div>
   <script>
-    // tạo hiệu ứng lung linh bằng các hạt sáng
     function createSpark(){
-      const spark=document.createElement('div');
+      const spark = document.createElement('div');
       spark.classList.add('spark');
-      spark.style.width=Math.random()*6+4+'px';
-      spark.style.height=spark.style.width;
-      spark.style.left=Math.random()*window.innerWidth+'px';
-      spark.style.top=window.innerHeight+'px';
-      spark.style.background=`rgba(255,${120+Math.random()*80},${160+Math.random()*80},0.9)`;
+      const size = Math.random() * 4 + 2;
+      spark.style.width = size + 'px';
+      spark.style.height = size + 'px';
+      spark.style.left = Math.random() * window.innerWidth + 'px';
+      spark.style.top = window.innerHeight + 'px';
+      spark.style.background = `rgba(255, ${120 + Math.random()*80}, ${160 + Math.random()*80}, 0.9)`;
       document.body.appendChild(spark);
-      const duration=2000+Math.random()*2000;
-      spark.style.animationDuration=duration+'ms';
-      setTimeout(()=>spark.remove(),duration);
+      const duration = 1500 + Math.random() * 1500;
+      spark.style.animationDuration = duration + 'ms';
+      setTimeout(() => spark.remove(), duration);
     }
-    setInterval(createSpark,150);
+    setInterval(createSpark, 200);
   </script>
 </body>
 </html>

@@ -79,6 +79,7 @@
       display: grid;
       place-items: center;
       isolation: isolate;
+      contain: layout paint;
     }
 
     .scene::before {
@@ -211,6 +212,7 @@
       place-items: center;
       z-index: 1;
       perspective: 1400px;
+      contain: layout paint;
     }
 
     .halo {
@@ -232,6 +234,7 @@
       filter:
         drop-shadow(0 0 14px rgba(255, 255, 255, 0.14))
         drop-shadow(0 0 28px rgba(255, 77, 133, 0.28));
+      will-change: transform, filter;
     }
 
     .cluster-halo {
@@ -282,6 +285,7 @@
       animation: particleFly var(--fly) ease-in-out infinite, particleTilt 7s ease-in-out infinite;
       animation-delay: var(--delay), var(--delay);
       pointer-events: none;
+      will-change: transform, opacity;
     }
 
     .heart-sprite {
@@ -349,6 +353,7 @@
       overflow: hidden;
       pointer-events: none;
       z-index: 1;
+      contain: layout paint;
     }
 
     .heart {
@@ -366,6 +371,7 @@
         floatUp var(--dur) linear forwards,
         miniBeat 1.2s ease-in-out infinite;
       animation-delay: var(--delay), calc(var(--delay) + 0.1s);
+      will-change: transform, opacity;
     }
 
     .heart::before,
@@ -469,14 +475,14 @@
     @keyframes floatUp {
       0% {
         opacity: 0;
-        translate: 0 0;
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(0.55);
       }
       10% {
         opacity: 1;
       }
       100% {
         opacity: 0;
-        translate: var(--drift) -120vh;
+        transform: translate3d(var(--drift), -120vh, 0) rotate(45deg) scale(0.55);
       }
     }
 
@@ -630,10 +636,15 @@
     const heartCluster = document.getElementById("heartCluster");
     const colors = ["#ff5fa2", "#ff86bc", "#ff4d85", "#ffd1e3", "#ff2d6f"];
     const heartIconSrc = "assets/heart-icon.png";
+    const isCompactLayout = window.matchMedia("(max-width: 700px)").matches;
+    const clusterPoints = isCompactLayout ? 180 : 320;
+    const burstSize = isCompactLayout ? 3 : 5;
+    const burstInterval = isCompactLayout ? 680 : 240;
+    const maxFloatingHearts = isCompactLayout ? 90 : 160;
 
     function createCluster() {
       const fragment = document.createDocumentFragment();
-      const points = 420;
+      const points = clusterPoints;
       const scale = 11.6;
 
       for (let i = 0; i < points; i += 1) {
@@ -700,6 +711,9 @@
       heart.style.animationDelay = `${delay}s, ${delay + 0.1}s`;
 
       heartLayer.appendChild(heart);
+      if (heartLayer.childElementCount > maxFloatingHearts) {
+        heartLayer.firstElementChild?.remove();
+      }
       heart.addEventListener("animationend", () => heart.remove());
     }
 
@@ -710,8 +724,8 @@
     }
 
     createCluster();
-    burstHearts(45);
-    setInterval(() => burstHearts(5), 240);
+    burstHearts(isCompactLayout ? 24 : 36);
+    setInterval(() => burstHearts(burstSize), burstInterval);
   </script>
 </body>
 </html>

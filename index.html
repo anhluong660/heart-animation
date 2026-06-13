@@ -1,105 +1,717 @@
-<!doctype html>
-<html lang="vi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Trái tim hồng lung linh</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heart Fly</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    @font-face {
+      font-family: "BerkshireSwash";
+      src: url("fonts/BerkshireSwash-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg-1: #190b2e;
+      --bg-2: #3b103d;
+      --bg-3: #7a1747;
+      --pink: #ff5fa2;
+      --rose: #ff86bc;
+      --hot: #ff2d6f;
+      --text: #fff3f8;
+      --shadow: rgba(255, 77, 133, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at center, #2b0036 0%, #0b0013 100%);
+      margin: 0;
       overflow: hidden;
+      font-family: "BerkshireSwash", cursive;
+      background-attachment: fixed;
+      background-color: #1c1020;
+      background:
+        linear-gradient(180deg, rgba(12, 6, 18, 0.24), rgba(12, 6, 18, 0.58)),
+        linear-gradient(135deg, rgba(52, 20, 38, 0.24), rgba(28, 16, 32, 0.35)),
+        url("assets/back-ground.jpg") center center / cover no-repeat fixed,
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(255, 135, 188, 0.12), transparent 26%),
+        radial-gradient(circle at 50% 80%, rgba(255, 45, 111, 0.1), transparent 25%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 52%, var(--bg-3));
+      color: var(--text);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.18));
+      pointer-events: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-position: 0 0, 24px 24px;
+      background-size: 48px 48px;
+      opacity: 0.2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.03), transparent 34%),
+        linear-gradient(180deg, rgba(7, 5, 12, 0.06), rgba(7, 5, 12, 0.16));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .title {
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92vw, 900px);
+      padding: clamp(0.7rem, 1.6vw, 1rem) clamp(1rem, 2.2vw, 2rem);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)),
+        rgba(255, 110, 167, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.1),
+        0 0 34px rgba(255, 77, 133, 0.18),
+        inset 0 0 18px rgba(255, 255, 255, 0.05);
+      text-align: center;
+      z-index: 2;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .title .romance-main {
+      display: block;
+      font-size: clamp(2rem, 5.5vw, 5.4rem);
+      letter-spacing: 0.05em;
+      font-weight: 400;
+      line-height: 1;
+      white-space: nowrap;
+      font-family: "BerkshireSwash", cursive;
+      background: linear-gradient(180deg, #ffffff 0%, #fff1f7 28%, #ffd3e8 54%, #ff97c6 78%, #ff5b90 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow:
+        0 0 12px rgba(255, 255, 255, 0.28),
+        0 0 28px rgba(255, 163, 203, 0.6),
+        0 0 50px rgba(255, 91, 144, 0.45);
+      animation: romanceBeat 3.2s ease-in-out infinite, romanceGlow 3.4s ease-in-out infinite;
+    }
+
+    .title .romance-main::after {
+      content: "";
+      position: absolute;
+      inset: 12% -10% -12% -10%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 62%);
+      filter: blur(16px);
+      z-index: -1;
+    }
+
+    .romance-name {
+      position: absolute;
+      bottom: clamp(24px, 7vh, 82px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(84vw, 560px);
+      padding: clamp(0.85rem, 1.7vw, 1.05rem) clamp(1rem, 2.2vw, 1.7rem);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08)),
+        rgba(255, 110, 167, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.14),
+        0 0 34px rgba(255, 77, 133, 0.2),
+        inset 0 0 18px rgba(255, 255, 255, 0.06);
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      animation: romanceFloat 3.2s ease-in-out infinite reverse, romanceGlow 3.4s ease-in-out infinite;
+    }
+
+    .romance-name .name-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      justify-content: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+
+    .romance-name .name {
+      display: block;
+      font-size: clamp(2rem, 5.5vw, 5.4rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      font-family: "BerkshireSwash", cursive;
+      color: #fff9fd;
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.22),
+        0 0 22px rgba(255, 160, 206, 0.55),
+        0 0 38px rgba(255, 77, 133, 0.32);
+      white-space: nowrap;
+    }
+
+    .mini-heart {
+      width: 3.5em;
+      height: 3.5em;
+      flex: 0 0 auto;
+      display: inline-block;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 0 4px rgba(255, 255, 255, 0.18))
+        drop-shadow(0 0 10px rgba(255, 77, 133, 0.28));
+      animation: miniHeartBeat 0.95s ease-in-out infinite;
+    }
+
+    .stage {
+      position: relative;
+      width: min(88vw, 820px);
+      height: min(88vw, 820px);
+      display: grid;
+      place-items: center;
+      z-index: 1;
+      perspective: 1400px;
+    }
+
+    .halo {
+      position: absolute;
+      width: min(78vw, 720px);
+      height: min(78vw, 720px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 122, 173, 0.14), rgba(255, 122, 173, 0.02) 48%, transparent 70%);
+      filter: blur(8px);
+      animation: breathe 3.2s ease-in-out infinite;
+    }
+
+    .heart-cluster {
+      position: relative;
+      width: min(50vw, 430px);
+      height: min(50vw, 430px);
+      transform-style: preserve-3d;
+      animation: tilt3d 8s ease-in-out infinite, breathe3d 1.35s ease-in-out infinite;
+      filter:
+        drop-shadow(0 0 14px rgba(255, 255, 255, 0.14))
+        drop-shadow(0 0 28px rgba(255, 77, 133, 0.28));
+    }
+
+    .cluster-halo {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 26%),
+        radial-gradient(circle at 50% 55%, rgba(255, 120, 180, 0.24), rgba(255, 82, 140, 0.09) 42%, transparent 72%);
+      transform: translateZ(-145px) scale(0.88);
+      filter: blur(22px);
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .cluster-shell {
+      position: absolute;
+      transform-style: preserve-3d;
+      inset: 0;
+      transform-origin: center;
+      animation: shellFloat 5.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .cluster-shell::before {
+      content: "";
+      position: absolute;
+      inset: 12% 18% 10% 18%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 34%),
+        radial-gradient(circle at 50% 62%, rgba(255, 57, 111, 0.24), rgba(255, 57, 111, 0) 72%);
+      transform: translateZ(-42px);
+      filter: blur(2px);
+      opacity: 0.78;
+    }
+
+    .heart-particle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--size);
+      height: var(--size);
+      margin-left: calc(var(--size) / -2);
+      margin-top: calc(var(--size) / -2);
+      transform-style: preserve-3d;
+      transform: translate3d(var(--x), var(--y), var(--z));
+      animation: particleFly var(--fly) ease-in-out infinite, particleTilt 7s ease-in-out infinite;
+      animation-delay: var(--delay), var(--delay);
+      pointer-events: none;
+    }
+
+    .heart-sprite {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0.88;
+      filter:
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.12))
+        drop-shadow(0 0 8px rgba(255, 77, 133, 0.14));
+      animation: particleBeat var(--beat) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .heart-particle[data-layer="front"] {
+      filter:
+        drop-shadow(0 0 3px rgba(255, 255, 255, 0.16))
+        drop-shadow(0 0 10px rgba(255, 77, 133, 0.2));
+    }
+
+    .heart-particle[data-layer="back"] {
+      opacity: 0.58;
+      filter:
+        blur(0.5px)
+        drop-shadow(0 0 6px rgba(255, 77, 133, 0.12));
+    }
+
+    .heart-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 28%;
+      height: 28%;
+      margin-left: -14%;
+      margin-top: -14%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 32%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 34%),
+        radial-gradient(circle at 50% 56%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 68%);
+      transform: translateZ(52px);
+      mix-blend-mode: screen;
+      filter: blur(0.8px);
+      pointer-events: none;
+    }
+
+    .subtitle {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      letter-spacing: 0.12em;
+      font-family: "BerkshireSwash", cursive;
+      color: rgba(255, 240, 248, 0.72);
+      user-select: none;
+      z-index: 2;
+    }
+
+    .heart-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .heart {
-      position: relative;
-      width: min(40vw, 200px);
-      height: min(36vw, 180px);
-      animation: beat 1.2s infinite ease-in-out;
-      transform-origin: center;
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      bottom: -10vh;
+      transform: rotate(45deg) scale(0.55);
+      background: var(--color);
+      border-radius: 14%;
+      opacity: 0;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15)) drop-shadow(0 0 18px var(--shadow));
+      animation:
+        floatUp var(--dur) linear forwards,
+        miniBeat 1.2s ease-in-out infinite;
+      animation-delay: var(--delay), calc(var(--delay) + 0.1s);
     }
 
     .heart::before,
     .heart::after {
       content: "";
       position: absolute;
-      top: 0;
       width: 100%;
-      height: 150%;
-      border-radius: 50% 50% 0 0;
-      background: radial-gradient(circle at 50% 45%, #ff66b2 0%, #ff1493 50%, #e60073 100%);
-      box-shadow: 0 0 25px rgba(255,102,178,0.9), 0 0 60px rgba(255,20,147,0.6);
-      animation: glow 2s infinite ease-in-out;
+      height: 100%;
+      border-radius: 50%;
+      background: inherit;
     }
 
     .heart::before {
-      left: 50%;
-      transform: translateX(-50%) rotate(-45deg);
-      transform-origin: 0 100%;
+      left: -50%;
     }
 
     .heart::after {
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      transform-origin: 100% 100%;
+      top: -50%;
     }
 
-    @keyframes beat {
-      0%, 100% { transform: scale(1); }
-      25% { transform: scale(1.1); }
-      50% { transform: scale(0.95); }
-      75% { transform: scale(1.05); }
+    @keyframes spin3d {
+      0% {
+        transform: rotateX(20deg) rotateY(0deg) rotateZ(-6deg);
+      }
+      50% {
+        transform: rotateX(20deg) rotateY(180deg) rotateZ(6deg);
+      }
+      100% {
+        transform: rotateX(20deg) rotateY(360deg) rotateZ(-6deg);
+      }
     }
 
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 20px #ff66b2) drop-shadow(0 0 40px #ff1493); }
-      50% { filter: drop-shadow(0 0 40px #ff80c0) drop-shadow(0 0 80px #ff1493); }
+    @keyframes breathe3d {
+      0%,
+      100% {
+        scale: 0.985;
+      }
+      50% {
+        scale: 1.055;
+      }
     }
 
-    .spark {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.8);
-      animation: sparkle 2s linear infinite;
+    @keyframes tilt3d {
+      0%,
+      100% {
+        transform: rotateX(14deg) rotateY(-10deg) rotateZ(-2deg);
+      }
+      50% {
+        transform: rotateX(20deg) rotateY(10deg) rotateZ(2deg);
+      }
     }
 
-    @keyframes sparkle {
-      from { transform: translateY(0) scale(0.5); opacity: 1; }
-      to { transform: translateY(-150px) scale(1); opacity: 0; }
+    @keyframes particleTilt {
+      0%,
+      100% {
+        rotate: 0deg;
+      }
+      50% {
+        rotate: 3deg;
+      }
     }
 
-    @media (max-width: 600px) {
+    @keyframes shellFloat {
+      0%,
+      100% {
+        transform: translateY(0) rotateX(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotateX(2deg);
+      }
+    }
+
+    @keyframes particleBeat {
+      0%, 100% {
+        transform: rotate(35deg) scale(var(--scale));
+      }
+      50% {
+        transform: rotate(35deg) scale(calc(var(--scale) * 1.16));
+      }
+      70% {
+        transform: rotate(35deg) scale(calc(var(--scale) * 0.95));
+      }
+    }
+
+    @keyframes particleFly {
+      0%,
+      100% {
+        transform: translate3d(var(--x), var(--y), var(--z));
+      }
+      25% {
+        transform: translate3d(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)), calc(var(--z) + var(--dz))) rotateZ(2deg);
+      }
+      50% {
+        transform: translate3d(calc(var(--x) * 0.94), calc(var(--y) * 0.94), calc(var(--z) + var(--dz) * 0.6));
+      }
+      75% {
+        transform: translate3d(calc(var(--x) - var(--dx)), calc(var(--y) - var(--dy)), calc(var(--z) - var(--dz))) rotateZ(-2deg);
+      }
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 0;
+        translate: 0 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        translate: var(--drift) -120vh;
+      }
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.65;
+      }
+      50% {
+        transform: scale(1.03);
+        opacity: 1;
+      }
+    }
+
+    @keyframes romanceBeat {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      15% {
+        transform: scale(1.08);
+      }
+      30% {
+        transform: scale(0.98);
+      }
+      45% {
+        transform: scale(1.12);
+      }
+      60% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes romanceGlow {
+      0%,
+      100% {
+        filter: drop-shadow(0 0 10px rgba(255, 160, 206, 0.22));
+      }
+      50% {
+        filter: drop-shadow(0 0 20px rgba(255, 190, 225, 0.42));
+      }
+    }
+
+    @keyframes miniHeartBeat {
+      0%,
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+      25% {
+        transform: scale(1.18) rotate(-7deg);
+      }
+      50% {
+        transform: scale(0.96) rotate(5deg);
+      }
+      75% {
+        transform: scale(1.14) rotate(-4deg);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .title {
+        top: 20%;
+        width: min(92vw, 520px);
+      }
+
+      .title .romance-main {
+        font-size: clamp(1.8rem, 11vw, 3.4rem);
+        letter-spacing: 0.02em;
+      }
+
+      .romance-name {
+        bottom: 26px;
+        width: min(88vw, 420px);
+      }
+
+      .romance-name .name {
+        font-size: clamp(1.1rem, 5.4vw, 1.8rem);
+      }
+
+      .mini-heart {
+        width: 24px;
+        height: 24px;
+      }
+
+      .stage {
+        width: min(96vw, 560px);
+        height: min(96vw, 560px);
+      }
+
+      .heart-cluster {
+        width: min(76vw, 360px);
+        height: min(76vw, 360px);
+      }
+
+      .halo {
+        width: min(92vw, 500px);
+        height: min(92vw, 500px);
+      }
+
+      html,
+      body {
+        background-attachment: scroll;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .heart-cluster,
+      .halo,
       .heart {
-        width: 45vw;
-        height: 40vw;
+        animation: none !important;
+      }
+
+      .heart-particle,
+      .cluster-shell {
+        animation: none !important;
+      }
+
+      .heart {
+        opacity: 0.9;
       }
     }
   </style>
 </head>
 <body>
-  <div class="heart"></div>
+  <main class="scene">
+    <div class="heart-layer" id="heartLayer" aria-hidden="true"></div>
+
+    <div class="title">
+      <strong class="romance-main">Anh Yêu Em</strong>
+    </div>
+
+    <section class="stage" aria-label="Flying hearts animation">
+      <div class="halo"></div>
+      <div class="heart-cluster" id="heartCluster" aria-hidden="true">
+        <div class="cluster-halo"></div>
+        <div class="heart-core"></div>
+      </div>
+    </section>
+
+    <div class="romance-name" aria-label="Name of girl">
+      <span class="name-row">
+        <span class="name">Mỹ Duyên</span>
+        <img class="mini-heart" src="assets/heart-icon.png" alt="" aria-hidden="true" />
+      </span>
+    </div>
+
+  </main>
+
   <script>
-    function createSpark(){
-      const spark = document.createElement('div');
-      spark.classList.add('spark');
-      const size = Math.random() * 4 + 2;
-      spark.style.width = size + 'px';
-      spark.style.height = size + 'px';
-      spark.style.left = Math.random() * window.innerWidth + 'px';
-      spark.style.top = window.innerHeight + 'px';
-      spark.style.background = `rgba(255, ${120 + Math.random()*80}, ${160 + Math.random()*80}, 0.9)`;
-      document.body.appendChild(spark);
-      const duration = 1500 + Math.random() * 1500;
-      spark.style.animationDuration = duration + 'ms';
-      setTimeout(() => spark.remove(), duration);
+    const heartLayer = document.getElementById("heartLayer");
+    const heartCluster = document.getElementById("heartCluster");
+    const colors = ["#ff5fa2", "#ff86bc", "#ff4d85", "#ffd1e3", "#ff2d6f"];
+    const heartIconSrc = "assets/heart-icon.png";
+
+    function createCluster() {
+      const fragment = document.createDocumentFragment();
+      const points = 420;
+      const scale = 11.6;
+
+      for (let i = 0; i < points; i += 1) {
+        const t = (Math.PI * 2 * i) / points;
+        const rawX = 16 * Math.pow(Math.sin(t), 3);
+        const rawY = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        const fill = Math.pow(Math.random(), 0.42);
+        const wobble = 1 + (Math.random() * 0.14 - 0.07);
+        const x = rawX * scale * fill * wobble;
+        const y = -rawY * scale * fill * wobble;
+        const depth = Math.sin(t * 3) * 62 + (Math.random() * 20 - 10);
+        const size = 10 + Math.random() * 9 + (1 - fill) * 6;
+        const particle = document.createElement("span");
+        const sprite = document.createElement("img");
+        const isFront = Math.cos(t) > 0;
+        const flyX = (Math.random() * 18 - 9).toFixed(2) + "px";
+        const flyY = (Math.random() * 14 - 7).toFixed(2) + "px";
+        const flyZ = (Math.random() * 22 - 11).toFixed(2) + "px";
+
+        particle.className = "heart-particle";
+        particle.dataset.layer = isFront ? "front" : "back";
+        particle.style.setProperty("--x", `${x}px`);
+        particle.style.setProperty("--y", `${y}px`);
+        particle.style.setProperty("--z", `${depth.toFixed(2)}px`);
+        particle.style.setProperty("--dx", flyX);
+        particle.style.setProperty("--dy", flyY);
+        particle.style.setProperty("--dz", flyZ);
+        particle.style.setProperty("--size", `${size}px`);
+        particle.style.setProperty("--scale", (0.84 + (1 - fill) * 0.42 + Math.random() * 0.06).toFixed(2));
+        particle.style.setProperty("--beat", `${1.02 + Math.random() * 0.6}s`);
+        particle.style.setProperty("--fly", `${3.2 + Math.random() * 3.2}s`);
+        particle.style.setProperty("--delay", `${-(Math.random() * 1.8).toFixed(2)}s`);
+        particle.style.opacity = `${0.62 + Math.random() * 0.18}`;
+        sprite.className = "heart-sprite";
+        sprite.src = heartIconSrc;
+        sprite.alt = "";
+        sprite.setAttribute("aria-hidden", "true");
+        particle.appendChild(sprite);
+        fragment.appendChild(particle);
+      }
+
+      heartCluster.prepend(fragment);
     }
-    setInterval(createSpark, 200);
+
+    function createHeart() {
+      const heart = document.createElement("img");
+      const size = 10 + Math.random() * 26;
+      const x = Math.random() * 100;
+      const duration = 6 + Math.random() * 8;
+      const delay = -(Math.random() * duration);
+      const drift = (Math.random() * 40 - 20).toFixed(2) + "vw";
+      const shadow = `rgba(255, 77, 133, ${0.18 + Math.random() * 0.28})`;
+
+      heart.className = "heart";
+      heart.src = heartIconSrc;
+      heart.alt = "";
+      heart.setAttribute("aria-hidden", "true");
+      heart.style.setProperty("--size", size + "px");
+      heart.style.setProperty("--x", x + "vw");
+      heart.style.setProperty("--dur", duration + "s");
+      heart.style.setProperty("--delay", delay + "s");
+      heart.style.setProperty("--drift", drift);
+      heart.style.setProperty("--shadow", shadow);
+      heart.style.animationDelay = `${delay}s, ${delay + 0.1}s`;
+
+      heartLayer.appendChild(heart);
+      heart.addEventListener("animationend", () => heart.remove());
+    }
+
+    function burstHearts(count) {
+      for (let i = 0; i < count; i += 1) {
+        createHeart();
+      }
+    }
+
+    createCluster();
+    burstHearts(45);
+    setInterval(() => burstHearts(5), 240);
   </script>
 </body>
 </html>

@@ -137,7 +137,7 @@
 
     .flame-icon {
       position: relative;
-      width: clamp(10rem, 16vw, 13rem);
+      width: clamp(9rem, 15vw, 12rem);
       height: clamp(8.4rem, 14.5vw, 11.2rem);
       animation: flameDance 1.35s ease-in-out infinite;
       filter: drop-shadow(0 0 10px rgba(255, 180, 71, 0.45));
@@ -271,7 +271,7 @@
       font-size: clamp(2rem, 5.5vw, 5.4rem);
       font-weight: 400;
       letter-spacing: 0.1em;
-      font-family: "BerkshireSwash", cursive;
+      font-family: "BerkshireSwash", "Segoe UI", "Tahoma", "Arial", sans-serif;
       color: #fff9fd;
       text-shadow:
         0 0 10px rgba(255, 255, 255, 0.22),
@@ -327,7 +327,7 @@
 
     .heart-cluster.is-bursting .heart-particle {
       animation: none !important;
-      transition: transform 2.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.8s ease;
+      transition: transform 2.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 2.1s ease;
     }
 
     .cluster-halo {
@@ -790,7 +790,7 @@
 
     <div class="romance-name" aria-label="Name of girl">
       <span class="name-row">
-        <span class="name">Mỹ Duyên</span>
+        <span class="name">Mỹ Duyên</span>
         <img class="mini-heart" src="assets/heart-icon.png" alt="" aria-hidden="true" />
       </span>
     </div>
@@ -812,7 +812,7 @@
     const clusterBurstDurationMs = 3200;
 
     function getDaysSinceStart() {
-      const startDate = new Date(2024, 7, 16);
+      const startDate = new Date(2024, 7, 17); // August 17, 2024 (month is 0-indexed)
       const today = new Date();
       const startUtc = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
       const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
@@ -941,25 +941,31 @@
       heartCluster.classList.add("is-bursting");
       particles.forEach((particle, index) => {
         const angle = (Math.PI * 2 * index) / particles.length;
-        const burstRadius = 180 + Math.random() * 260;
+        const burstRadius = 240 + Math.random() * 320;
         const burstX = Math.cos(angle) * burstRadius;
         const burstY = Math.sin(angle) * burstRadius * 0.8;
-        const burstZ = (Math.random() - 0.5) * 300;
-        const scale = 0.3 + Math.random() * 0.42;
+        const burstZ = (Math.random() - 0.5) * 360;
+        const scale = 0.22 + Math.random() * 0.38;
         const restX = particle.dataset.restX || particle.style.getPropertyValue("--x");
         const restY = particle.dataset.restY || particle.style.getPropertyValue("--y");
         const restZ = particle.dataset.restZ || particle.style.getPropertyValue("--z");
         const baseOpacity = particle.dataset.baseOpacity || particle.style.opacity;
 
-        particle.style.transition = "transform 1.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s ease";
-        particle.style.opacity = "0.34";
-        particle.style.transform = `translate3d(${burstX}px, ${burstY}px, ${burstZ}px) scale(${scale}) rotate(${(Math.random() - 0.5) * 60}deg)`;
+        particle.style.transition = "transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease";
+        particle.style.opacity = "0.8";
+        particle.style.transform = `translate3d(${restX}, ${restY}, ${restZ}) scale(0.72) rotate(${(Math.random() - 0.5) * 18}deg)`;
 
         window.setTimeout(() => {
-          particle.style.transition = "transform 1.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s ease";
+          particle.style.transition = "transform 2.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.8s ease";
+          particle.style.opacity = "0.14";
+          particle.style.transform = `translate3d(${burstX}px, ${burstY}px, ${burstZ}px) scale(${scale}) rotate(${(Math.random() - 0.5) * 60}deg)`;
+        }, 220);
+
+        window.setTimeout(() => {
+          particle.style.transition = "transform 2.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.8s ease";
           particle.style.opacity = baseOpacity;
           particle.style.transform = `translate3d(${restX}, ${restY}, ${restZ}) scale(1) rotate(0deg)`;
-        }, 650);
+        }, 1380);
       });
 
       window.setTimeout(() => {
